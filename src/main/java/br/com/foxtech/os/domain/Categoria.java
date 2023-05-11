@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,13 +26,10 @@ public class Categoria implements Serializable {
 	
 	private String nome;
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "categoria")
 	private List<Aparelho> aparelhos = new ArrayList<>();
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "categoria")
-	private List<Peca> pecas = new ArrayList<>();
 	
 	
 	public Categoria() {
@@ -63,14 +58,6 @@ public class Categoria implements Serializable {
 		this.nome = nome;
 	}
 	
-
-	public List<Peca> getPecas() {
-		return pecas;
-	}
-
-	public void setPecas(List<Peca> pecas) {
-		this.pecas = pecas;
-	}
 
 	public List<Aparelho> getAparelhos() {
 		return aparelhos;

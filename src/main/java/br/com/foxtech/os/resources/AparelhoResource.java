@@ -18,7 +18,7 @@ public class AparelhoResource {
 	private AparelhoService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> listar(@PathVariable Long id) {
+	public ResponseEntity<Aparelho> listar(@PathVariable Long id) {
 		
 		Aparelho obj = service.find(id);
 		

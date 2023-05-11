@@ -18,7 +18,7 @@ public class FabricanteResource {
 	private FabricanteService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> buscarPorId(@PathVariable Long id){
+	public ResponseEntity<Fabricante> buscarPorId(@PathVariable Long id){
 		
 		Fabricante obj = service.find(id);
 		
