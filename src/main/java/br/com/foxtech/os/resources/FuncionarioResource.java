@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.foxtech.os.domain.Cliente;
-import br.com.foxtech.os.services.ClienteService;
+import br.com.foxtech.os.domain.Funcionario;
+import br.com.foxtech.os.services.FuncionarioService;
 
 @RestController
-@RequestMapping(value = "/clientes")
-public class ClienteResource {
+@RequestMapping(value = "/funcionarios")
+public class FuncionarioResource {
 	
 	@Autowired
-	private ClienteService service;
+	private FuncionarioService service;
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> listar(@PathVariable Long id) {
 		
-		Cliente obj = service.find(id);
+		Funcionario obj = service.find(id);
 		
 		return ResponseEntity.ok().body(obj);
 	}

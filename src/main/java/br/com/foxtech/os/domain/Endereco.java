@@ -3,6 +3,8 @@ package br.com.foxtech.os.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +20,7 @@ public class Endereco implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String logradouro;
 	private String numero;
 	private String complemento;
@@ -29,16 +31,22 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "cidade_id")
 	private Cidade cidade;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+	
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "funcionario_id")
+	private Funcionario funcionario;
 	
 	public Endereco() {
 		
 	}
 
-	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
-			Cliente cliente, Cidade cidade) {
+	public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep,
+			Cliente cliente, Cidade cidade, Funcionario funcionario) {
 		super();
 		this.id = id;
 		this.logradouro = logradouro;
@@ -48,13 +56,14 @@ public class Endereco implements Serializable {
 		this.cep = cep;
 		this.cliente = cliente;
 		this.setCidade(cidade);
+		this.funcionario = funcionario;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -112,6 +121,16 @@ public class Endereco implements Serializable {
 
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
+	}
+	
+	
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	@Override
