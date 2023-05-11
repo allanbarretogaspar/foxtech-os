@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Aparelho implements Serializable {
+public class Peca implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -19,69 +19,166 @@ public class Aparelho implements Serializable {
 	private Long id;
 
 	private String modelo;
+	private String nome;
+	private String codigo;
+	private String variacao;
+	private Double precoEntrada;
+	private Double precoSaida;
+	
+	@ManyToOne
+	@JoinColumn(name = "fornecedor_id")
+	private Fornecedor fornecedor;
 
 	@ManyToOne
 	@JoinColumn(name = "fabricante_id")
 	private Fabricante fabricante;
 	
-	@ManyToOne
-	@JoinColumn(name = "categoria_id")
-	private Categoria categoria;
-
 	private String observacoes;
 
-	public Aparelho() {
+	public Peca() {
 
 	}
 
-	public Aparelho(Long id, String modelo, Fabricante fabricante, Categoria categoria, String observacoes) {
+	
+
+	public Peca(Long id, String modelo, String nome, String codigo, String variacao, Double precoEntrada,
+			Double precoSaida, Fornecedor fornecedor, Fabricante fabricante, String observacoes) {
 		super();
 		this.id = id;
 		this.modelo = modelo;
+		this.nome = nome;
+		this.codigo = codigo;
+		this.variacao = variacao;
+		this.precoEntrada = precoEntrada;
+		this.precoSaida = precoSaida;
+		this.fornecedor = fornecedor;
 		this.fabricante = fabricante;
-		this.categoria = categoria;
 		this.observacoes = observacoes;
 	}
+	
+	
+
+
 
 	public Long getId() {
 		return id;
 	}
 
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
 
 	public String getModelo() {
 		return modelo;
 	}
 
+
+
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+
+
+	public String getVariacao() {
+		return variacao;
+	}
+
+
+
+	public void setVariacao(String variacao) {
+		this.variacao = variacao;
+	}
+
+
+
+	public Double getPrecoEntrada() {
+		return precoEntrada;
+	}
+
+
+
+	public void setPrecoEntrada(Double precoEntrada) {
+		this.precoEntrada = precoEntrada;
+	}
+
+
+
+	public Double getPrecoSaida() {
+		return precoSaida;
+	}
+
+
+
+	public void setPrecoSaida(Double precoSaida) {
+		this.precoSaida = precoSaida;
+	}
+
+
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+
 
 	public Fabricante getFabricante() {
 		return fabricante;
 	}
 
+
+
 	public void setFabricante(Fabricante fabricante) {
 		this.fabricante = fabricante;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
 
 	public String getObservacoes() {
 		return observacoes;
 	}
 
+
+
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -96,7 +193,7 @@ public class Aparelho implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Aparelho other = (Aparelho) obj;
+		Peca other = (Peca) obj;
 		return Objects.equals(id, other.id);
 	}
 

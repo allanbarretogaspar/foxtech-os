@@ -17,6 +17,11 @@ import jakarta.persistence.OneToMany;
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * @author allan.gaspar
+	 * indica o tipo do aparelho se notebook ou smartphone etc
+	 */
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -26,6 +31,10 @@ public class Categoria implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "categoria")
 	private List<Aparelho> aparelhos = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "categoria")
+	private List<Peca> pecas = new ArrayList<>();
 	
 	
 	public Categoria() {
@@ -54,7 +63,14 @@ public class Categoria implements Serializable {
 		this.nome = nome;
 	}
 	
-	
+
+	public List<Peca> getPecas() {
+		return pecas;
+	}
+
+	public void setPecas(List<Peca> pecas) {
+		this.pecas = pecas;
+	}
 
 	public List<Aparelho> getAparelhos() {
 		return aparelhos;

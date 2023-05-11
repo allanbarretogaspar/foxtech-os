@@ -27,6 +27,10 @@ public class Fabricante implements Serializable {
 	@OneToMany(mappedBy = "fabricante")
 	private List<Aparelho> aparelhos = new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "fabricante")
+	private List<Peca> pecas = new ArrayList<>();
+	
 	public Fabricante() {
 		
 	}
@@ -59,6 +63,16 @@ public class Fabricante implements Serializable {
 
 	public void setAparelhos(List<Aparelho> aparelhos) {
 		this.aparelhos = aparelhos;
+	}
+	
+	
+
+	public List<Peca> getPecas() {
+		return pecas;
+	}
+
+	public void setPecas(List<Peca> pecas) {
+		this.pecas = pecas;
 	}
 
 	@Override

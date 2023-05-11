@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -16,99 +18,95 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Funcionario implements Serializable {
+public class Fornecedor implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String cpf;
 	private String nome;
-
-	@OneToMany(mappedBy = "funcionario")
-	private List<Endereco> enderecos = new ArrayList<>();
+	private String email;
+	private String cpfOuCnpj;
+	private String site;
 
 	@ElementCollection
-	@CollectionTable(name = "TELEFONE_FUNCIONARIO")
+	@CollectionTable(name = "TELEFONE_FORNECEDOR")
 	private Set<String> telefones = new HashSet<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "fornecedor")
+	private List<Peca> pecas = new ArrayList<>();
 
-	private String cargo;
-
-	public Funcionario() {
+	public Fornecedor() {
 
 	}
-	
-	
-	public Funcionario(Long id, String cpf, String nome, String cargo) {
+
+	public Fornecedor(Long id, String nome, String email, String cpfOuCnpj, String site) {
 		super();
 		this.id = id;
-		this.cpf = cpf;
 		this.nome = nome;
-		this.cargo = cargo;
+		this.email = email;
+		this.cpfOuCnpj = cpfOuCnpj;
+		this.site = site;
 	}
-
-	
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
-	public String getCpf() {
-		return cpf;
-	}
-
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 
 	public String getNome() {
 		return nome;
 	}
 
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-
-
-	public List<Endereco> getEnderecos() {
-		return enderecos;
+	public String getEmail() {
+		return email;
 	}
 
-
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
+	}
+
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
 
 	public Set<String> getTelefones() {
 		return telefones;
 	}
 
-
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
+	
 
-
-	public String getCargo() {
-		return cargo;
+	public List<Peca> getPecas() {
+		return pecas;
 	}
 
-
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
+	public void setPecas(List<Peca> pecas) {
+		this.pecas = pecas;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -123,8 +121,10 @@ public class Funcionario implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcionario other = (Funcionario) obj;
+		Fornecedor other = (Fornecedor) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
 
 }
