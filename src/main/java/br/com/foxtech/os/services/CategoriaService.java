@@ -1,13 +1,16 @@
 package br.com.foxtech.os.services;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.foxtech.os.domain.Categoria;
 import br.com.foxtech.os.repositories.CategoriaRepository;
+import br.com.foxtech.os.services.exeptions.DataIntegrityException;
+import br.com.foxtech.os.services.exeptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -20,7 +23,7 @@ public class CategoriaService {
 		Optional<Categoria> obj = repo.findById(id);
 		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + "Tipo: Tipo: " + Categoria.class.getName(),  Categoria.class));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
 	public Categoria insert(Categoria obj) {
@@ -32,6 +35,23 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+
+	public void delete(Long id) {
+		
+		try {
+			find(id);
+			repo.deleteById(id);
+			
+		} catch (DataIntegrityViolationException e) {
+			
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui aparelhos");
+		}
+	}
+
+	public List<Categoria> findAll() {
+		
+		return repo.findAll();
 	}
 
 }

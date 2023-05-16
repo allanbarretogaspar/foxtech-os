@@ -82,8 +82,8 @@ public class FoxtechOsApplication implements CommandLineRunner{
 		cat2.getAparelhos().addAll(Arrays.asList(ap3));
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-		fabricanteRepository.saveAll(Arrays.asList(fab1, fab2));
-		aparelhoRepository.saveAll(Arrays.asList(ap1, ap2));
+		fabricanteRepository.saveAll(Arrays.asList(fab1, fab2, fab3));
+		aparelhoRepository.saveAll(Arrays.asList(ap1, ap2, ap3));
 		
 		Estado est1 = new Estado(null, "Minas Gerais", "MG");
 		Estado est2 = new Estado(null, "São Paulo", "SP");
