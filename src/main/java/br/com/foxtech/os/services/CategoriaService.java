@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.foxtech.os.domain.Categoria;
@@ -54,7 +57,7 @@ public class CategoriaService {
 		
 		return repo.findAll();
 	}
-<<<<<<< HEAD
+
 	
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		
@@ -67,7 +70,7 @@ public class CategoriaService {
 		return new Categoria(objDto.getId(), objDto.getNome());
 		
 	}
-=======
 
->>>>>>> parent of 18f5ce9 (Adicionando endpoint de paginação de categorias)
+
+
 }
