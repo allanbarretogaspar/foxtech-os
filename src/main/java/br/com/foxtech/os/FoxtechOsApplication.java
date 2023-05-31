@@ -120,8 +120,6 @@ public class FoxtechOsApplication implements CommandLineRunner{
 		funcionarioRepository.saveAll(Arrays.asList(func1));
 		enderecoRepository.saveAll(Arrays.asList(e3));
 		
-		
-		
 	}
 
 }
