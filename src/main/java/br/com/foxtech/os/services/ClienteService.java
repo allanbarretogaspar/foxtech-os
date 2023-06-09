@@ -19,6 +19,7 @@ import br.com.foxtech.os.dto.ClienteNewDTO;
 import br.com.foxtech.os.repositories.ClienteRepository;
 import br.com.foxtech.os.repositories.EnderecoRepository;
 import br.com.foxtech.os.services.exeptions.DataIntegrityException;
+import br.com.foxtech.os.services.exeptions.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
@@ -32,7 +33,8 @@ public class ClienteService {
 	public Cliente find(Long id) {
 
 		Optional<Cliente> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
 	public Cliente insert(Cliente obj) {

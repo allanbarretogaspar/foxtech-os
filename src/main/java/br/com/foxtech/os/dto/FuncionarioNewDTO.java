@@ -3,52 +3,56 @@ package br.com.foxtech.os.dto;
 import java.io.Serializable;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
-import br.com.foxtech.os.services.validation.ClienteInsert;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
-@ClienteInsert
-public class ClienteNewDTO implements Serializable{
+public class FuncionarioNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@CPF
+	private String cpf;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
-	@Email(message = "E-mail inválido")
-	private String email;
-	
-	@NotEmpty(message = "Preenchimento obrigatório")
-	private String cpfOuCnpj;
-	
-	private Integer tipo;
+	private String cargo;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String logradouro;
-	
+
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String numero;
-	
+
 	private String complemento;
-	
+
 	private String bairro;
-	
+
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cep;
-	
+
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String telefone1;
-	
+
 	private String telefone2;
-	
+
 	private String telefone3;
-	
+
 	private Long cidadeId;
 	
-	public ClienteNewDTO() {
+	public FuncionarioNewDTO() {
 		
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getNome() {
@@ -59,28 +63,12 @@ public class ClienteNewDTO implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCargo() {
+		return cargo;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
-	}
-
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
-	}
-
-	public Integer getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
 	}
 
 	public String getLogradouro() {
@@ -154,5 +142,5 @@ public class ClienteNewDTO implements Serializable{
 	public void setCidadeId(Long cidadeId) {
 		this.cidadeId = cidadeId;
 	}
-		
+
 }
