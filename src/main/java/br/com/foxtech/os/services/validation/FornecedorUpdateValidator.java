@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
 import br.com.foxtech.os.domain.Fornecedor;
-import br.com.foxtech.os.dto.FornecedorNewDTO;
+import br.com.foxtech.os.dto.FornecedorDTO;
 import br.com.foxtech.os.repositories.FornecedorRepository;
 import br.com.foxtech.os.resources.exception.FieldMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class FornecedorUpdateValidator implements ConstraintValidator<FornecedorUpdate, FornecedorNewDTO> {
+public class FornecedorUpdateValidator implements ConstraintValidator<FornecedorUpdate, FornecedorDTO> {
 
 	@Autowired
 	private HttpServletRequest request;
@@ -28,7 +28,7 @@ public class FornecedorUpdateValidator implements ConstraintValidator<Fornecedor
 	}
 
 	@Override
-	public boolean isValid(FornecedorNewDTO objDto, ConstraintValidatorContext context) {
+	public boolean isValid(FornecedorDTO objDto, ConstraintValidatorContext context) {
 
 		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String>) request

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.foxtech.os.domain.Fornecedor;
+import br.com.foxtech.os.dto.FornecedorDTO;
 import br.com.foxtech.os.dto.FornecedorNewDTO;
 import br.com.foxtech.os.services.FornecedorService;
 import jakarta.validation.Valid;
@@ -47,7 +48,7 @@ public class FornecedorResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody FornecedorNewDTO objDto, @PathVariable Long id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody FornecedorDTO objDto, @PathVariable Long id) {
 		Fornecedor obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
@@ -62,23 +63,22 @@ public class FornecedorResource {
 	}
 
 	@GetMapping()
-	public ResponseEntity<List<FornecedorNewDTO>> findAll() {
+	public ResponseEntity<List<FornecedorDTO>> findAll() {
 
 		List<Fornecedor> list = service.findAll();
-		List<FornecedorNewDTO> listDto = list.stream().map(obj -> new FornecedorNewDTO(obj))
-				.collect(Collectors.toList());
+		List<FornecedorDTO> listDto = list.stream().map(obj -> new FornecedorDTO(obj)).collect(Collectors.toList());
+
 		return ResponseEntity.ok().body(listDto);
 	}
 
 	@GetMapping(value = "/page")
-	public ResponseEntity<Page<FornecedorNewDTO>> findPage(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
+	public ResponseEntity<Page<FornecedorDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 
 		Page<Fornecedor> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<FornecedorNewDTO> listDto = list.map(obj -> new FornecedorNewDTO(obj));
+		Page<FornecedorDTO> listDto = list.map(obj -> new FornecedorDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}
 

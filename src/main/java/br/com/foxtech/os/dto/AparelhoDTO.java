@@ -7,27 +7,34 @@ import org.hibernate.validator.constraints.Length;
 import br.com.foxtech.os.domain.Aparelho;
 import jakarta.validation.constraints.NotEmpty;
 
-public class AparelhoDTO implements Serializable{
+public class AparelhoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
-	@Length(min=2, max=80, message="O tamanho deve ser entre 2 e 80 caracteres")
+	@Length(min = 2, max = 80, message = "O tamanho deve ser entre 2 e 80 caracteres")
 	private String modelo;
-	
+
 	private Long fabricanteId;
+	private String fabricanteNome;
 	private Long categoriaId;
+	private String categoriaNome;
 	private String observacoes;
-	
+
 	public AparelhoDTO() {
-		
+
 	}
-	
+
 	public AparelhoDTO(Aparelho obj) {
-		
+
 		this.id = obj.getId();
 		this.modelo = obj.getModelo();
+		this.categoriaNome = obj.getCategoria().getNome();
+		this.fabricanteNome = obj.getFabricante().getNome();
+		this.categoriaId = obj.getCategoria().getId();
+		this.fabricanteId = obj.getFabricante().getId();
+		this.observacoes = obj.getObservacoes();
 	}
 
 	public Long getId() {
@@ -69,6 +76,21 @@ public class AparelhoDTO implements Serializable{
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
-	
-	
+
+	public String getFabricanteNome() {
+		return fabricanteNome;
+	}
+
+	public void setFabricanteNome(String fabricanteNome) {
+		this.fabricanteNome = fabricanteNome;
+	}
+
+	public String getCategoriaNome() {
+		return categoriaNome;
+	}
+
+	public void setCategoriaNome(String categoriaNome) {
+		this.categoriaNome = categoriaNome;
+	}
+
 }

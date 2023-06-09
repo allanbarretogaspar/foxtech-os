@@ -14,6 +14,7 @@ import br.com.foxtech.os.domain.Cliente;
 import br.com.foxtech.os.domain.Endereco;
 import br.com.foxtech.os.domain.Estado;
 import br.com.foxtech.os.domain.Fabricante;
+import br.com.foxtech.os.domain.Fornecedor;
 import br.com.foxtech.os.domain.Funcionario;
 import br.com.foxtech.os.domain.enums.TipoCliente;
 import br.com.foxtech.os.repositories.AparelhoRepository;
@@ -23,6 +24,7 @@ import br.com.foxtech.os.repositories.ClienteRepository;
 import br.com.foxtech.os.repositories.EnderecoRepository;
 import br.com.foxtech.os.repositories.EstadoRepository;
 import br.com.foxtech.os.repositories.FabricanteRepository;
+import br.com.foxtech.os.repositories.FornecedorRepository;
 import br.com.foxtech.os.repositories.FuncionarioRepository;
 
 @SpringBootApplication
@@ -51,6 +53,9 @@ public class FoxtechOsApplication implements CommandLineRunner{
 	
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
+	
+	@Autowired
+	private FornecedorRepository fornecedorRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(FoxtechOsApplication.class, args);
@@ -123,6 +128,10 @@ public class FoxtechOsApplication implements CommandLineRunner{
 		
 		funcionarioRepository.saveAll(Arrays.asList(func1));
 		enderecoRepository.saveAll(Arrays.asList(e3));
+		
+		Fornecedor fornecedor = new Fornecedor(null, "Nagem", "nagem@nagem.com.br",
+				"79836135000141", "www.nagem.com", TipoCliente.PESSOAJURIDICA);
+		fornecedorRepository.saveAll(Arrays.asList(fornecedor));
 		
 	}
 

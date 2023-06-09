@@ -10,13 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import br.com.foxtech.os.domain.Cidade;
-import br.com.foxtech.os.domain.Endereco;
 import br.com.foxtech.os.domain.Fornecedor;
-import br.com.foxtech.os.domain.Funcionario;
 import br.com.foxtech.os.domain.enums.TipoCliente;
+import br.com.foxtech.os.dto.FornecedorDTO;
 import br.com.foxtech.os.dto.FornecedorNewDTO;
-import br.com.foxtech.os.dto.FuncionarioNewDTO;
 import br.com.foxtech.os.repositories.FornecedorRepository;
 import br.com.foxtech.os.services.exeptions.DataIntegrityException;
 import br.com.foxtech.os.services.exeptions.ObjectNotFoundException;
@@ -72,32 +69,27 @@ public class FornecedorService {
 		return repo.findAll(pageRequest);
 	}
 
-	public Fornecedor fromDTO(FornecedorNewDTO objDto) {
+	public Fornecedor fromDTO(FornecedorDTO objDto) {
 
-		return new Fornecedor(objDto.getId(), objDto.getNome(),objDto.getEmail(), objDto.getCpfOuCnpj(), objDto.getSite(), TipoCliente.toEnum(objDto.getTipo()));
+		return new Fornecedor(objDto.getId(), objDto.getNome(),objDto.getEmail(), null, objDto.getSite(), null);
 		
 
 	}
 	
-	public Funcionario fromDTO(FuncionarioNewDTO objDto) {
+	public Fornecedor fromDTO(FornecedorNewDTO objDto) {
 		
-		Funcionario func = new Funcionario(null, objDto.getCpf(), objDto.getNome(),objDto.getCargo());
+		Fornecedor forn = new Fornecedor(objDto.getId(), objDto.getNome(),objDto.getEmail(), 
+				objDto.getCpfOuCnpj(), objDto.getSite(), TipoCliente.toEnum(objDto.getTipo()));
 		
-		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
-		
-		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), 
-				objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), null, cid, func);
-		
-		func.getEnderecos().add(end);
-		func.getTelefones().add(objDto.getTelefone1());
+		forn.getTelefones().add(objDto.getTelefone1());
 		
 		if (objDto.getTelefone2()!=null) {
-			func.getTelefones().add(objDto.getTelefone2());
+			forn.getTelefones().add(objDto.getTelefone2());
 		}
 		if (objDto.getTelefone3()!=null) {
-			func.getTelefones().add(objDto.getTelefone3());
+			forn.getTelefones().add(objDto.getTelefone3());
 		}
-		return func;
+		return forn;
 	}
 	
 	private void updateData(Fornecedor newObj, Fornecedor obj) {
