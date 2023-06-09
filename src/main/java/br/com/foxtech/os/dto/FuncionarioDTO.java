@@ -2,14 +2,27 @@ package br.com.foxtech.os.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
+
 import br.com.foxtech.os.domain.Funcionario;
+import jakarta.validation.constraints.NotEmpty;
 
 public class FuncionarioDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@CPF
 	private String cpf;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 2, max = 60, message = "O tamanho deve ser entre 2 e 60 caracteres")
 	private String cargo;
 	
 	public FuncionarioDTO() {

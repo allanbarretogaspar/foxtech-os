@@ -4,33 +4,37 @@ import java.io.Serializable;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.foxtech.os.domain.Cliente;
-import br.com.foxtech.os.services.validation.ClienteUpdate;
+import br.com.foxtech.os.domain.Fornecedor;
+import br.com.foxtech.os.services.validation.FornecedorUpdate;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
-@ClienteUpdate
-public class ClienteDTO implements Serializable {
+@FornecedorUpdate
+public class FornecedorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
-	@Length(min=5, max=150, message="O tamanho deve ser entre 5 e 150 caracteres")
+	@Length(min = 5, max = 150, message = "O tamanho deve ser entre 5 e 150 caracteres")
 	private String nome;
-	
+
 	@NotEmpty(message = "Preenchimento Obrigatório")
 	@Email()
 	private String email;
-	
-	public ClienteDTO() {
-		
+	private String site;
+
+	public FornecedorDTO() {
+
 	}
-	
-	public ClienteDTO(Cliente obj) {
-		id = obj.getId();
-		nome = obj.getNome();
-		email = obj.getEmail();
+
+	public FornecedorDTO(Fornecedor obj) {
+
+		this.id = obj.getId();
+		this.nome = obj.getNome();
+		this.email = obj.getEmail();
+		this.site = obj.getSite();
+
 	}
 
 	public Long getId() {
@@ -56,4 +60,13 @@ public class ClienteDTO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+
 }

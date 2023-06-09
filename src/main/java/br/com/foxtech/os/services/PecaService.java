@@ -10,36 +10,36 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import br.com.foxtech.os.domain.Aparelho;
-import br.com.foxtech.os.domain.Categoria;
 import br.com.foxtech.os.domain.Fabricante;
-import br.com.foxtech.os.dto.AparelhoDTO;
-import br.com.foxtech.os.repositories.AparelhoRepository;
+import br.com.foxtech.os.domain.Fornecedor;
+import br.com.foxtech.os.domain.Peca;
+import br.com.foxtech.os.dto.PecaDTO;
+import br.com.foxtech.os.repositories.PecaRepository;
 import br.com.foxtech.os.services.exeptions.DataIntegrityException;
 import br.com.foxtech.os.services.exeptions.ObjectNotFoundException;
 
 @Service
-public class AparelhoService {
+public class PecaService {
 	
 	@Autowired
-	private AparelhoRepository repo;
+	private PecaRepository repo;
 	
-	public Aparelho find(Long id) {
+	public Peca find(Long id) {
 
-		Optional<Aparelho> obj = repo.findById(id);
+		Optional<Peca> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Aparelho.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Peca.class.getName()));
 	}
 	
-	public Aparelho insert(Aparelho obj) {
+	public Peca insert(Peca obj) {
 
 		obj.setId(null);
 		repo.save(obj);
 		return obj;
 	}
 	
-	public Aparelho update(Aparelho obj) {
-		Aparelho newObj = find(obj.getId());
+	public Peca update(Peca obj) {
+		Peca newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
@@ -57,29 +57,35 @@ public class AparelhoService {
 		}
 	}
 
-	public List<Aparelho> findAll() {
+	public List<Peca> findAll() {
 
 		return repo.findAll();
 	}
 
-	public Page<Aparelho> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Peca> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 
-	public Aparelho fromDTO(AparelhoDTO objDto) {
+	public Peca fromDTO(PecaDTO objDto) {
 
 		Fabricante fab = new Fabricante(objDto.getFabricanteId(), null);
-		Categoria cat = new Categoria(objDto.getCategoriaId(), null);
-		return new Aparelho(objDto.getId(), objDto.getModelo(), fab, cat, objDto.getObservacoes());	
+		Fornecedor forn = new Fornecedor(objDto.getFornecedorId(), null, null, null, null, null);
+		return new Peca(objDto.getId(), objDto.getModelo(), objDto.getNome(), objDto.getCodigo(), 
+				objDto.getVariacao(), objDto.getPrecoEntrada(), objDto.getPrecoSaida(), forn, fab, objDto.getObservacoes());	
 
 	}
 	
 	
-	private void updateData(Aparelho newObj, Aparelho obj) {
+	private void updateData(Peca newObj, Peca obj) {
 		
 		newObj.setModelo(obj.getModelo());
+		newObj.setNome(obj.getNome());
+		newObj.setCodigo(obj.getCodigo());
+		newObj.setVariacao(obj.getVariacao());
+		newObj.setPrecoEntrada(obj.getPrecoEntrada());
+		newObj.setPrecoSaida(obj.getPrecoSaida());
 		newObj.setObservacoes(obj.getObservacoes());
 			
 	}

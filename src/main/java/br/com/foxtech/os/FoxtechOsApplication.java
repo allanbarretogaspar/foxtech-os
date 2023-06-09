@@ -88,19 +88,23 @@ public class FoxtechOsApplication implements CommandLineRunner{
 		Estado est1 = new Estado(null, "Minas Gerais", "MG");
 		Estado est2 = new Estado(null, "São Paulo", "SP");
 		Estado est3 = new Estado(null, "Distrito Federal", "DF");
+		Estado est4 = new Estado(null, "Bahia", "BA");
 
 		Cidade c1 = new Cidade(null, "Uberlândia", est1);
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
 		Cidade c4 = new Cidade(null, "Brasília", est3);
+		Cidade c5 = new Cidade(null, "Salvador", est4);
+		
 		
 
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
 		est3.getCidades().addAll(Arrays.asList(c4));
+		est4.getCidades().addAll(Arrays.asList(c5));
 
-		estadoRepository.saveAll(Arrays.asList(est1, est2, est3));
-		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4));
+		estadoRepository.saveAll(Arrays.asList(est1, est2, est3, est4));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5));
 		
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "993838393"));

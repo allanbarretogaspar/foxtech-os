@@ -32,7 +32,7 @@ public class FuncionarioResource {
 	private FuncionarioService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Funcionario> listar(@PathVariable Long id) {
+	public ResponseEntity<Funcionario> find(@PathVariable Long id) {
 		
 		Funcionario obj = service.find(id);
 		

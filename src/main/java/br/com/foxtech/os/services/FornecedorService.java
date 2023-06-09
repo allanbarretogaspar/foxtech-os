@@ -12,40 +12,38 @@ import org.springframework.stereotype.Service;
 
 import br.com.foxtech.os.domain.Cidade;
 import br.com.foxtech.os.domain.Endereco;
+import br.com.foxtech.os.domain.Fornecedor;
 import br.com.foxtech.os.domain.Funcionario;
-import br.com.foxtech.os.dto.FuncionarioDTO;
+import br.com.foxtech.os.domain.enums.TipoCliente;
+import br.com.foxtech.os.dto.FornecedorNewDTO;
 import br.com.foxtech.os.dto.FuncionarioNewDTO;
-import br.com.foxtech.os.repositories.EnderecoRepository;
-import br.com.foxtech.os.repositories.FuncionarioRepository;
+import br.com.foxtech.os.repositories.FornecedorRepository;
 import br.com.foxtech.os.services.exeptions.DataIntegrityException;
 import br.com.foxtech.os.services.exeptions.ObjectNotFoundException;
 
 @Service
-public class FuncionarioService {
+public class FornecedorService {
 
 	@Autowired
-	private FuncionarioRepository repo;
+	private FornecedorRepository repo;
 	
-	@Autowired
-	private EnderecoRepository enderecoRepository;
 
-	public Funcionario find(Long id) {
+	public Fornecedor find(Long id) {
 
-		Optional<Funcionario> obj = repo.findById(id);
+		Optional<Fornecedor> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Funcionario.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Fornecedor.class.getName()));
 	}
 	
-	public Funcionario insert(Funcionario obj) {
+	public Fornecedor insert(Fornecedor obj) {
 
 		obj.setId(null);
 		repo.save(obj);
-		enderecoRepository.saveAll(obj.getEnderecos());
 		return obj;
 	}
 	
-	public Funcionario update(Funcionario obj) {
-		Funcionario newObj = find(obj.getId());
+	public Fornecedor update(Fornecedor obj) {
+		Fornecedor newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
@@ -63,20 +61,20 @@ public class FuncionarioService {
 		}
 	}
 
-	public List<Funcionario> findAll() {
+	public List<Fornecedor> findAll() {
 
 		return repo.findAll();
 	}
 
-	public Page<Funcionario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Fornecedor> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 
-	public Funcionario fromDTO(FuncionarioDTO objDto) {
+	public Fornecedor fromDTO(FornecedorNewDTO objDto) {
 
-		return new Funcionario(objDto.getId(), objDto.getCpf(), objDto.getNome(), objDto.getCargo());
+		return new Fornecedor(objDto.getId(), objDto.getNome(),objDto.getEmail(), objDto.getCpfOuCnpj(), objDto.getSite(), TipoCliente.toEnum(objDto.getTipo()));
 		
 
 	}
@@ -102,10 +100,11 @@ public class FuncionarioService {
 		return func;
 	}
 	
-	private void updateData(Funcionario newObj, Funcionario obj) {
-		newObj.setCpf(obj.getCpf());
+	private void updateData(Fornecedor newObj, Fornecedor obj) {
 		newObj.setNome(obj.getNome());
-		newObj.setCargo(obj.getCargo());
+		newObj.setEmail(obj.getEmail());
+		newObj.setCpfOuCnpj(obj.getCpfOuCnpj());
+		newObj.setSite(obj.getSite());
 			
 	}
 

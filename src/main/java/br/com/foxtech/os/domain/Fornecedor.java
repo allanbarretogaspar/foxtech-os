@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.foxtech.os.domain.enums.TipoCliente;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -29,6 +30,7 @@ public class Fornecedor implements Serializable {
 	private String email;
 	private String cpfOuCnpj;
 	private String site;
+	private Integer tipo;
 
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE_FORNECEDOR")
@@ -42,13 +44,14 @@ public class Fornecedor implements Serializable {
 
 	}
 
-	public Fornecedor(Long id, String nome, String email, String cpfOuCnpj, String site) {
+	public Fornecedor(Long id, String nome, String email, String cpfOuCnpj, String site, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.site = site;
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 
 	public Long getId() {
@@ -106,6 +109,16 @@ public class Fornecedor implements Serializable {
 
 	public void setPecas(List<Peca> pecas) {
 		this.pecas = pecas;
+	}
+	
+	
+
+	public Integer getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override
