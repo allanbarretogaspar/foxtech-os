@@ -20,30 +20,29 @@ import br.com.foxtech.os.services.exeptions.ObjectNotFoundException;
 
 @Service
 public class PecaService {
-	
+
 	@Autowired
 	private PecaRepository repo;
-	
+
 	public Peca find(Long id) {
 
 		Optional<Peca> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Peca.class.getName()));
 	}
-	
+
 	public Peca insert(Peca obj) {
 
 		obj.setId(null);
 		repo.save(obj);
 		return obj;
 	}
-	
+
 	public Peca update(Peca obj) {
 		Peca newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
-
 
 	public void delete(Long id) {
 
@@ -72,14 +71,13 @@ public class PecaService {
 
 		Fabricante fab = new Fabricante(objDto.getFabricanteId(), null);
 		Fornecedor forn = new Fornecedor(objDto.getFornecedorId(), null, null, null, null, null);
-		return new Peca(objDto.getId(), objDto.getModelo(), objDto.getNome(), objDto.getCodigo(), 
-				objDto.getVariacao(), objDto.getPrecoEntrada(), objDto.getPrecoSaida(), forn, fab, objDto.getObservacoes());	
+		return new Peca(objDto.getId(), objDto.getModelo(), objDto.getNome(), objDto.getCodigo(), objDto.getVariacao(),
+				objDto.getPrecoEntrada(), objDto.getPrecoSaida(), forn, fab, objDto.getObservacoes());
 
 	}
-	
-	
+
 	private void updateData(Peca newObj, Peca obj) {
-		
+
 		newObj.setModelo(obj.getModelo());
 		newObj.setNome(obj.getNome());
 		newObj.setCodigo(obj.getCodigo());
@@ -87,7 +85,8 @@ public class PecaService {
 		newObj.setPrecoEntrada(obj.getPrecoEntrada());
 		newObj.setPrecoSaida(obj.getPrecoSaida());
 		newObj.setObservacoes(obj.getObservacoes());
-			
+		newObj.setFabricante(obj.getFabricante());
+		newObj.setFornecedor(obj.getFornecedor());
 	}
 
 }

@@ -10,40 +10,38 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import br.com.foxtech.os.domain.Aparelho;
 import br.com.foxtech.os.domain.Categoria;
-import br.com.foxtech.os.domain.Fabricante;
-import br.com.foxtech.os.dto.AparelhoDTO;
-import br.com.foxtech.os.repositories.AparelhoRepository;
+import br.com.foxtech.os.domain.Defeito;
+import br.com.foxtech.os.dto.DefeitoDTO;
+import br.com.foxtech.os.repositories.DefeitoRepository;
 import br.com.foxtech.os.services.exeptions.DataIntegrityException;
 import br.com.foxtech.os.services.exeptions.ObjectNotFoundException;
 
 @Service
-public class AparelhoService {
-	
-	@Autowired
-	private AparelhoRepository repo;
-	
-	public Aparelho find(Long id) {
+public class DefeitoService {
 
-		Optional<Aparelho> obj = repo.findById(id);
+	@Autowired
+	private DefeitoRepository repo;
+
+	public Defeito find(Long id) {
+
+		Optional<Defeito> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Aparelho.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Defeito.class.getName()));
 	}
-	
-	public Aparelho insert(Aparelho obj) {
+
+	public Defeito insert(Defeito obj) {
 
 		obj.setId(null);
 		repo.save(obj);
 		return obj;
 	}
-	
-	public Aparelho update(Aparelho obj) {
-		Aparelho newObj = find(obj.getId());
+
+	public Defeito update(Defeito obj) {
+		Defeito newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
-
 
 	public void delete(Long id) {
 
@@ -57,33 +55,29 @@ public class AparelhoService {
 		}
 	}
 
-	public List<Aparelho> findAll() {
+	public List<Defeito> findAll() {
 
 		return repo.findAll();
 	}
 
-	public Page<Aparelho> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Defeito> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 
-	public Aparelho fromDTO(AparelhoDTO objDto) {
+	public Defeito fromDTO(DefeitoDTO objDto) {
 
-		Fabricante fab = new Fabricante(objDto.getFabricanteId(), null);
 		Categoria cat = new Categoria(objDto.getCategoriaId(), null);
-		return new Aparelho(objDto.getId(), objDto.getModelo(), fab, cat, objDto.getObservacoes());	
+		return new Defeito(objDto.getId(), objDto.getDescricao(), cat);
 
 	}
-	
-	
-	private void updateData(Aparelho newObj, Aparelho obj) {
-		
-		newObj.setModelo(obj.getModelo());
-		newObj.setObservacoes(obj.getObservacoes());
+
+	private void updateData(Defeito newObj, Defeito obj) {
+
+		newObj.setDescricao(obj.getDescricao());
 		newObj.setCategoria(obj.getCategoria());
-		newObj.setFabricante(obj.getFabricante());
-			
+
 	}
 
 }

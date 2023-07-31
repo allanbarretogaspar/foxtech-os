@@ -30,6 +30,9 @@ public class Categoria implements Serializable {
 	@OneToMany(mappedBy = "categoria")
 	private List<Aparelho> aparelhos = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "categoria")
+	private List<Defeito> defeitos = new ArrayList<>();
+	
 	
 	
 	public Categoria() {
@@ -65,6 +68,14 @@ public class Categoria implements Serializable {
 
 	public void setAparelhos(List<Aparelho> aparelhos) {
 		this.aparelhos = aparelhos;
+	}
+
+	public List<Defeito> getDefeitos() {
+		return defeitos;
+	}
+
+	public void setDefeitos(List<Defeito> defeitos) {
+		this.defeitos = defeitos;
 	}
 
 	@Override
